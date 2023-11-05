@@ -2,13 +2,14 @@ package com.alenut.planningservice.mapper;
 
 import com.alenut.planningservice.dto.ShiftBaseDto;
 import com.alenut.planningservice.dto.ShiftDto;
+import com.alenut.planningservice.dto.ShiftUpdateDto;
 import com.alenut.planningservice.model.entity.Shift;
 import com.alenut.planningservice.model.entity.Worker;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-05T21:29:36+0200",
+    date = "2023-11-05T23:19:35+0200",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 public class ShiftMapperImpl implements ShiftMapper {
@@ -41,6 +42,16 @@ public class ShiftMapperImpl implements ShiftMapper {
         shiftDto.setId( entity.getId() );
 
         return shiftDto;
+    }
+
+    @Override
+    public void updateEntityFromDto(ShiftUpdateDto dto, Shift entity) {
+        if ( dto == null ) {
+            return;
+        }
+
+        entity.setType( dto.getType() );
+        entity.setWorkDay( dto.getWorkDay() );
     }
 
     private Long entityWorkerId(Shift shift) {

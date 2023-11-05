@@ -8,6 +8,7 @@ import com.alenut.planningservice.dto.WorkerDto;
 import com.alenut.planningservice.mapper.WorkerMapper;
 import com.alenut.planningservice.model.entity.Worker;
 import com.alenut.planningservice.service.WorkerService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +36,16 @@ public class WorkerController {
     this.workerService = workerService;
   }
 
-  @PostMapping("/")
+  @PostMapping
+  @Operation(summary = "Create a new worker")
   public ResponseEntity<WorkerDto> create(@Valid @RequestBody WorkerBaseDto baseDto) {
     Worker worker = workerService.create(baseDto);
     WorkerDto workerDto = WorkerMapper.INSTANCE.toDto(worker);
     return ResponseEntity.ok(workerDto);
   }
 
-  @GetMapping("/{id}")
+  @GetMapping(value = "/{id}")
+  @Operation(summary = "Get worker by id")
   public ResponseEntity<WorkerDto> findById(@PathVariable Long id) {
     Worker worker = workerService.getById(id);
     WorkerDto workerDto = WorkerMapper.INSTANCE.toDto(worker);

@@ -5,6 +5,7 @@ import static java.lang.String.format;
 import com.alenut.planningservice.common.exception.ShiftAlreadyExistsException;
 import com.alenut.planningservice.common.exception.ShiftNotFoundException;
 import com.alenut.planningservice.dto.ShiftBaseDto;
+import com.alenut.planningservice.dto.ShiftUpdateDto;
 import com.alenut.planningservice.mapper.ShiftMapper;
 import com.alenut.planningservice.model.entity.Shift;
 import com.alenut.planningservice.model.entity.Worker;
@@ -14,6 +15,7 @@ import com.alenut.planningservice.service.WorkerService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,6 +55,27 @@ public class ShiftServiceImpl implements ShiftService {
   public Shift getById(@NotNull Long id) {
     return repository.findById(id)
         .orElseThrow(() -> new ShiftNotFoundException(format(SHIFT_NOT_FOUND_MSG_TEMPLATE, id)));
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public List<Shift> findByWorkerId(@NotNull Long workerId) {
+    return repository.findByWorkerId(workerId);
+  }
+
+  @Override
+  @Transactional
+  public Shift update(@NotNull Long id, @Valid ShiftUpdateDto updateDto) {
+    Shift shift = getById(id);
+    ShiftMapper.INSTANCE.updateEntityFromDto(updateDto, shift);
+    return repository.save(shift);
+  }
+
+  @Override
+  @Transactional
+  public void delete(@NotNull Long id) {
+    Shift shift = getById(id);
+    repository.delete(shift);
   }
 
   private void checkIfShiftAlreadyExists(Long workerId, LocalDate workDay) {
