@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 public class ShiftDto extends ShiftBaseDto {
 
-  @Schema(description = "The db ID of the worker resource")
+  @Schema(description = "The db ID of the shift resource")
   private Long id;
 }

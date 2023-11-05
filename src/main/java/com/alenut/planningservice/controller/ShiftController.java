@@ -70,10 +70,8 @@ public class ShiftController {
   @PutMapping(value = "/{id}")
   @Operation(summary = "Update shift by id")
   public ResponseEntity<ShiftDto> update(@PathVariable Long id, @Valid @RequestBody ShiftUpdateDto updateDto) {
-
     Shift shift = shiftService.update(id, updateDto);
     ShiftDto shiftDto = ShiftMapper.INSTANCE.toDto(shift);
-
     return ResponseEntity.ok(shiftDto);
   }
 

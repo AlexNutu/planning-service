@@ -18,10 +18,6 @@ public class ListResultDto<T> {
     return elements.size();
   }
 
-  public T elementAt(int element) {
-    return elements.get(element);
-  }
-
   public void setElements(List<T> elements) {
     this.elements = elements;
   }

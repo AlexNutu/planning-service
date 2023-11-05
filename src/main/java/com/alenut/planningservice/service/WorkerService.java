@@ -1,6 +1,7 @@
 package com.alenut.planningservice.service;
 
 import com.alenut.planningservice.dto.WorkerBaseDto;
+import com.alenut.planningservice.dto.WorkerUpdateDto;
 import com.alenut.planningservice.model.entity.Worker;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -28,4 +29,20 @@ public interface WorkerService {
    * @return the found Worker
    */
   Worker getById(@NotNull Long id);
+
+  /**
+   * Update a Worker.
+   *
+   * @param id        id of the worker
+   * @param updateDto the input DTO
+   * @return the updated Worker
+   */
+  Worker update(@NotNull Long id, @Valid WorkerUpdateDto updateDto);
+
+  /**
+   * Delete a Worker.
+   *
+   * @param id id of the worker
+   */
+  void delete(@NotNull Long id);
 }

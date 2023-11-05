@@ -67,6 +67,9 @@ public class ShiftServiceImpl implements ShiftService {
   @Transactional
   public Shift update(@NotNull Long id, @Valid ShiftUpdateDto updateDto) {
     Shift shift = getById(id);
+
+    checkIfShiftAlreadyExists(shift.getWorker().getId(), updateDto.getWorkDay());
+
     ShiftMapper.INSTANCE.updateEntityFromDto(updateDto, shift);
     return repository.save(shift);
   }

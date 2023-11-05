@@ -5,6 +5,7 @@ import static com.alenut.planningservice.controller.WorkerController.PATH_WORKER
 
 import com.alenut.planningservice.dto.WorkerBaseDto;
 import com.alenut.planningservice.dto.WorkerDto;
+import com.alenut.planningservice.dto.WorkerUpdateDto;
 import com.alenut.planningservice.mapper.WorkerMapper;
 import com.alenut.planningservice.model.entity.Worker;
 import com.alenut.planningservice.service.WorkerService;
@@ -14,9 +15,11 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,5 +53,20 @@ public class WorkerController {
     Worker worker = workerService.getById(id);
     WorkerDto workerDto = WorkerMapper.INSTANCE.toDto(worker);
     return ResponseEntity.ok(workerDto);
+  }
+
+  @PutMapping(value = "/{id}")
+  @Operation(summary = "Update worker by id")
+  public ResponseEntity<WorkerDto> update(@PathVariable Long id, @Valid @RequestBody WorkerUpdateDto updateDto) {
+    Worker worker = workerService.update(id, updateDto);
+    WorkerDto workerDto = WorkerMapper.INSTANCE.toDto(worker);
+    return ResponseEntity.ok(workerDto);
+  }
+
+  @DeleteMapping(value = "/{id}")
+  @Operation(summary = "Delete worker by id")
+  public ResponseEntity<Void> delete(@PathVariable Long id) {
+    workerService.delete(id);
+    return ResponseEntity.noContent().build();
   }
 }

@@ -2,10 +2,12 @@ package com.alenut.planningservice.mapper;
 
 import com.alenut.planningservice.dto.WorkerBaseDto;
 import com.alenut.planningservice.dto.WorkerDto;
+import com.alenut.planningservice.dto.WorkerUpdateDto;
 import com.alenut.planningservice.model.entity.Worker;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
@@ -19,4 +21,8 @@ public interface WorkerMapper {
   Worker toEntity(WorkerBaseDto dto);
 
   WorkerDto toDto(Worker entity);
+
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "shifts", ignore = true)
+  void updateEntityFromDto(WorkerUpdateDto dto, @MappingTarget Worker entity);
 }

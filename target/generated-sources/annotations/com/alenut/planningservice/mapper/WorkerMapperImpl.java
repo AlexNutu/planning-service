@@ -2,12 +2,13 @@ package com.alenut.planningservice.mapper;
 
 import com.alenut.planningservice.dto.WorkerBaseDto;
 import com.alenut.planningservice.dto.WorkerDto;
+import com.alenut.planningservice.dto.WorkerUpdateDto;
 import com.alenut.planningservice.model.entity.Worker;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-05T11:51:36+0200",
+    date = "2023-11-05T23:52:28+0200",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 public class WorkerMapperImpl implements WorkerMapper {
@@ -40,5 +41,16 @@ public class WorkerMapperImpl implements WorkerMapper {
         workerDto.setPhone( entity.getPhone() );
 
         return workerDto;
+    }
+
+    @Override
+    public void updateEntityFromDto(WorkerUpdateDto dto, Worker entity) {
+        if ( dto == null ) {
+            return;
+        }
+
+        entity.setEmail( dto.getEmail() );
+        entity.setName( dto.getName() );
+        entity.setPhone( dto.getPhone() );
     }
 }
