@@ -1,5 +1,7 @@
 package com.alenut.planningservice.config;
 
+import com.alenut.planningservice.common.exception.ShiftAlreadyExistsException;
+import com.alenut.planningservice.common.exception.ShiftNotFoundException;
 import com.alenut.planningservice.common.exception.WorkerAlreadyExistsException;
 import com.alenut.planningservice.common.exception.WorkerNotFoundException;
 import java.util.HashMap;
@@ -16,15 +18,15 @@ public class GlobalExceptionHandler {
 
   private static final String ERROR = "Error: ";
 
-  @ExceptionHandler({WorkerNotFoundException.class})
-  public ResponseEntity<Object> handleWorkerNotFoundException(WorkerNotFoundException exception) {
+  @ExceptionHandler({WorkerNotFoundException.class, ShiftNotFoundException.class})
+  public ResponseEntity<Object> handleWorkerNotFoundException(RuntimeException exception) {
     return ResponseEntity
         .status(HttpStatus.NOT_FOUND)
         .body(ERROR + exception.getMessage());
   }
 
-  @ExceptionHandler({WorkerAlreadyExistsException.class})
-  public ResponseEntity<Object> handleWorkerAlreadyExistsException(WorkerAlreadyExistsException exception) {
+  @ExceptionHandler({WorkerAlreadyExistsException.class, ShiftAlreadyExistsException.class})
+  public ResponseEntity<Object> handleWorkerAlreadyExistsException(RuntimeException exception) {
     return ResponseEntity
         .status(HttpStatus.CONFLICT)
         .body(ERROR + exception.getMessage());

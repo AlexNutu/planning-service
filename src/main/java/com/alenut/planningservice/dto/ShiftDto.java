@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class WorkerDto extends WorkerBaseDto {
+public class ShiftDto extends ShiftBaseDto {
 
   @Schema(description = "The db ID of the worker resource")
   private Long id;

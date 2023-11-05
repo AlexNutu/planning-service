@@ -1,7 +1,10 @@
-package com.alenut.planningservice.model;
+package com.alenut.planningservice.model.entity;
 
+import com.alenut.planningservice.model.enums.ShiftTypeEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,11 +27,9 @@ public class Shift {
   @JoinColumn(name = "worker_id", nullable = false)
   private Worker worker;
 
-  @Column(name = "start_hour", nullable = false)
-  private Integer startHour;
-
-  @Column(name = "end_hour", nullable = false)
-  private Integer endHour;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "type", nullable = false)
+  private ShiftTypeEnum type;
 
   @Column(name = "work_day", nullable = false)
   private LocalDate workDay;
@@ -49,20 +50,12 @@ public class Shift {
     this.worker = worker;
   }
 
-  public Integer getStartHour() {
-    return startHour;
+  public ShiftTypeEnum getType() {
+    return type;
   }
 
-  public void setStartHour(Integer startHour) {
-    this.startHour = startHour;
-  }
-
-  public Integer getEndHour() {
-    return endHour;
-  }
-
-  public void setEndHour(Integer endHour) {
-    this.endHour = endHour;
+  public void setType(ShiftTypeEnum type) {
+    this.type = type;
   }
 
   public LocalDate getWorkDay() {

@@ -1,4 +1,4 @@
-package com.alenut.planningservice.model;
+package com.alenut.planningservice.model.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
