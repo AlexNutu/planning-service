@@ -26,23 +26,23 @@ public class ShiftController {
 
   static final String PATH_SHIFTS = PLANNING + "/shifts";
 
-  @GetMapping("/{id}")
-  public ResponseEntity<ShiftDto> findById(@PathVariable Long id) {
-    // TODO: 04.11.2023
-
-    if (id == -1) {
-      throw new ShiftNotFoundException("Shift not found");
-    }
-
-    return ResponseEntity.ok(new ShiftDto());
-  }
-
   @PostMapping("/")
   public ResponseEntity<ShiftDto> create(@Valid @RequestBody ShiftBaseDto baseDto) {
     // TODO: 04.11.2023
 
     if (baseDto.getWorkerId() == null) {
       throw new ShiftAlreadyExistsException("Shift already exists");
+    }
+
+    return ResponseEntity.ok(new ShiftDto());
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<ShiftDto> findById(@PathVariable Long id) {
+    // TODO: 04.11.2023
+
+    if (id == -1) {
+      throw new ShiftNotFoundException("Shift not found");
     }
 
     return ResponseEntity.ok(new ShiftDto());

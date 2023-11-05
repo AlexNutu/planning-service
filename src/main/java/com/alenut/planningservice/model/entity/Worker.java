@@ -23,7 +23,7 @@ public class Worker {
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "worker", cascade = CascadeType.ALL)
   private List<Shift> shifts;
 
-  @Column(name = "email", nullable = false, length = 100)
+  @Column(name = "email", nullable = false, unique = true, length = 100)
   private String email;
 
   @Column(name = "name", nullable = false, length = 100)
