@@ -14,8 +14,10 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 @Service
+@Validated
 public class WorkerServiceImpl implements WorkerService {
 
   private static final String WORKER_ALREADY_EXISTS_MSG_TEMPLATE = "Worker with e-mail: [%s] already exists";

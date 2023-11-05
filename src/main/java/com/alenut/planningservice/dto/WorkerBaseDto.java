@@ -13,15 +13,15 @@ public class WorkerBaseDto {
 
   @NotEmpty
   @Size(max = 100)
-  @Schema(description = "E-mail of the worker")
+  @Schema(description = "E-mail of the worker", example = "workerjoe@gmail.com")
   private String email;
 
   @NotEmpty
   @Size(max = 100)
-  @Schema(description = "Name of the worker")
+  @Schema(description = "Name of the worker", example = "Joe Worker")
   private String name;
 
   @Size(max = 15)
-  @Schema(description = "Phone of the worker")
+  @Schema(description = "Phone of the worker", example = "+49 123 456 789")
   private String phone;
 }

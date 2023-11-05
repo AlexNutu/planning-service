@@ -13,14 +13,14 @@ import lombok.Setter;
 public class ShiftBaseDto {
 
   @NotNull
-  @Schema(description = "Id of the worker that is working the shift")
+  @Schema(description = "Id of the worker that is working the shift", example = "1")
   private Long workerId;
 
   @NotNull
-  @Schema(description = "Type of the shift e.g. morning, afternoon, night")
+  @Schema(description = "Type of the shift e.g. morning, afternoon, night", implementation = ShiftTypeEnum.class, example = "MORNING")
   private ShiftTypeEnum type;
 
   @NotNull
-  @Schema(description = "Day of the shift")
+  @Schema(description = "Day of the shift", example = "2024-01-01")
   private LocalDate workDay;
 }

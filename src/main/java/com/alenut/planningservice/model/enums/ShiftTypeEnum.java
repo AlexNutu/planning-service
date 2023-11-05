@@ -1,8 +1,5 @@
 package com.alenut.planningservice.model.enums;
 
-import lombok.Getter;
-
-@Getter
 public enum ShiftTypeEnum {
 
   MORNING(0, 8),
@@ -15,5 +12,13 @@ public enum ShiftTypeEnum {
   ShiftTypeEnum(Integer startHour, Integer endHour) {
     this.startHour = startHour;
     this.endHour = endHour;
+  }
+
+  public Integer getStartHour() {
+    return startHour;
+  }
+
+  public Integer getEndHour() {
+    return endHour;
   }
 }
