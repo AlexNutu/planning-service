@@ -1,7 +1,8 @@
 package com.alenut.planningservice.controller;
 
 import static com.alenut.planningservice.common.controller.Constants.PLANNING;
-import static com.alenut.planningservice.controller.WorkerController.PATH_WORKERS;
+import static com.alenut.planningservice.controller.WorkerController.WORKERS_PATH;
+import static org.springframework.web.util.UriComponentsBuilder.fromPath;
 
 import com.alenut.planningservice.dto.WorkerBaseDto;
 import com.alenut.planningservice.dto.WorkerDto;
@@ -12,6 +13,7 @@ import com.alenut.planningservice.service.WorkerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java.net.URI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -25,12 +27,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(PATH_WORKERS)
+@RequestMapping(WORKERS_PATH)
 @Validated
 @Tag(name = "Workers")
 public class WorkerController {
 
-  static final String PATH_WORKERS = PLANNING + "/workers";
+  static final String WORKERS_PATH = PLANNING + "/workers";
 
   private final WorkerService workerService;
 
@@ -44,7 +46,12 @@ public class WorkerController {
   public ResponseEntity<WorkerDto> create(@Valid @RequestBody WorkerBaseDto baseDto) {
     Worker worker = workerService.create(baseDto);
     WorkerDto workerDto = WorkerMapper.INSTANCE.toDto(worker);
-    return ResponseEntity.ok(workerDto);
+
+    URI location = fromPath(WORKERS_PATH + "/{id}")
+        .buildAndExpand(worker.getId())
+        .toUri();
+
+    return ResponseEntity.created(location).body(workerDto);
   }
 
   @GetMapping(value = "/{id}")

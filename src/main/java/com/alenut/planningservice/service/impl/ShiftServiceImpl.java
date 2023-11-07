@@ -25,8 +25,8 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class ShiftServiceImpl implements ShiftService {
 
-  private static final String SHIFT_ALREADY_EXISTS_MSG_TEMPLATE = "Shift already exists for worker: [%s], at the date: [%s], with schedule: [%s]";
-  private static final String SHIFT_NOT_FOUND_MSG_TEMPLATE = "Shift with id: [%s] was not found";
+  public static final String SHIFT_ALREADY_EXISTS_MSG_TEMPLATE = "Shift already exists for worker: [%s], at the date: [%s], with schedule: [%s]";
+  public static final String SHIFT_NOT_FOUND_MSG_TEMPLATE = "Shift with id: [%s] was not found";
 
   private final WorkerService workerService;
   private final ShiftRepository repository;

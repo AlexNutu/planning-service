@@ -21,8 +21,8 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class WorkerServiceImpl implements WorkerService {
 
-  private static final String WORKER_ALREADY_EXISTS_MSG_TEMPLATE = "Worker with e-mail: [%s] already exists";
-  private static final String WORKER_NOT_FOUND_MSG_TEMPLATE = "Worker with id: [%s] was not found";
+  public static final String WORKER_ALREADY_EXISTS_MSG_TEMPLATE = "Worker with e-mail: [%s] already exists";
+  public static final String WORKER_NOT_FOUND_MSG_TEMPLATE = "Worker with id: [%s] was not found";
   private final WorkerRepository repository;
 
   @Autowired

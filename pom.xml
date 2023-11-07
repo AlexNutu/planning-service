@@ -18,6 +18,8 @@
     <java.version>17</java.version>
     <openapi-ui.version>2.2.0</openapi-ui.version>
     <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
+    <lombok.version>1.18.30</lombok.version>
+    <jackson.version>2.14.2</jackson.version>
   </properties>
   <dependencies>
     <dependency>
@@ -46,7 +48,7 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <optional>true</optional>
+      <version>${lombok.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springdoc</groupId>
@@ -57,6 +59,11 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+      <version>${jackson.version}</version>
     </dependency>
   </dependencies>
 
@@ -71,7 +78,7 @@
             <path>
               <groupId>org.projectlombok</groupId>
               <artifactId>lombok</artifactId>
-              <version>1.18.20</version>
+              <version>${lombok.version}</version>
             </path>
             <!-- This is needed when using Lombok 1.18.16 and above -->
             <path>

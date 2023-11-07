@@ -8,7 +8,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-05T23:52:28+0200",
+    date = "2023-11-07T15:36:57+0200",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 public class WorkerMapperImpl implements WorkerMapper {
@@ -39,6 +39,7 @@ public class WorkerMapperImpl implements WorkerMapper {
         workerDto.setEmail( entity.getEmail() );
         workerDto.setName( entity.getName() );
         workerDto.setPhone( entity.getPhone() );
+        workerDto.setId( entity.getId() );
 
         return workerDto;
     }

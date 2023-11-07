@@ -1,7 +1,8 @@
 package com.alenut.planningservice.controller;
 
 import static com.alenut.planningservice.common.controller.Constants.PLANNING;
-import static com.alenut.planningservice.controller.ShiftController.PATH_SHIFTS;
+import static com.alenut.planningservice.controller.ShiftController.SHIFTS_PATH;
+import static org.springframework.web.util.UriComponentsBuilder.fromPath;
 
 import com.alenut.planningservice.dto.ShiftBaseDto;
 import com.alenut.planningservice.dto.ShiftDto;
@@ -13,6 +14,7 @@ import com.alenut.planningservice.service.ShiftService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,12 +30,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(PATH_SHIFTS)
+@RequestMapping(SHIFTS_PATH)
 @Validated
 @Tag(name = "Shifts")
 public class ShiftController {
 
-  static final String PATH_SHIFTS = PLANNING + "/shifts";
+  static final String SHIFTS_PATH = PLANNING + "/shifts";
 
   private final ShiftService shiftService;
 
@@ -47,7 +49,12 @@ public class ShiftController {
   public ResponseEntity<ShiftDto> create(@Valid @RequestBody ShiftBaseDto baseDto) {
     Shift shift = shiftService.create(baseDto);
     ShiftDto shiftDto = ShiftMapper.INSTANCE.toDto(shift);
-    return ResponseEntity.ok(shiftDto);
+
+    URI location = fromPath(SHIFTS_PATH + "/{id}")
+        .buildAndExpand(shift.getId())
+        .toUri();
+
+    return ResponseEntity.created(location).body(shiftDto);
   }
 
   @GetMapping(value = "/{id}")
