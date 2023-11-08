@@ -2,6 +2,7 @@ package com.alenut.planningservice.datagenerator;
 
 import com.alenut.planningservice.dto.WorkerBaseDto;
 import com.alenut.planningservice.dto.WorkerUpdateDto;
+import com.alenut.planningservice.model.entity.Worker;
 
 public final class WorkerDataGenerator {
 
@@ -22,5 +23,14 @@ public final class WorkerDataGenerator {
     updateDto.setName("Dan Worker");
     updateDto.setPhone("+50 123 456 789");
     return updateDto;
+  }
+
+  public static Worker createWorker() {
+    Worker entity = new Worker();
+    entity.setId(1L);
+    entity.setEmail("workerjoe@gmail.com");
+    entity.setName("Joe Worker");
+    entity.setPhone("+49 123 456 789");
+    return entity;
   }
 }

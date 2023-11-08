@@ -24,12 +24,16 @@ import com.alenut.planningservice.common.AbstractIntegrationTest;
 import com.alenut.planningservice.config.GlobalControllerAdvice;
 import com.alenut.planningservice.dto.ShiftBaseDto;
 import com.alenut.planningservice.dto.ShiftDto;
+import com.alenut.planningservice.dto.ShiftListDto;
 import com.alenut.planningservice.dto.ShiftUpdateDto;
 import com.alenut.planningservice.model.entity.Shift;
 import com.alenut.planningservice.model.entity.Worker;
+import com.alenut.planningservice.model.enums.ShiftTypeEnum;
 import com.alenut.planningservice.service.ShiftService;
 import com.alenut.planningservice.service.WorkerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.LocalDate;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,6 +165,54 @@ class ShiftControllerIntegrationTest extends AbstractIntegrationTest {
 
     // Then
     assertEquals(format("Error: " + SHIFT_NOT_FOUND_MSG_TEMPLATE, unknownShiftId), errorMsg);
+  }
+
+  @Test
+  void findByWorkerId_shouldReturn200_whenShiftsAreFoundForWorkerId() throws Exception {
+    // Given
+    Worker worker = workerService.create(createWorkerBaseDto());
+    ShiftBaseDto morningShiftBaseDto = createShiftBaseDto(worker.getId());
+    ShiftBaseDto nightShiftBaseDto = createShiftBaseDto(worker.getId());
+    nightShiftBaseDto.setType(ShiftTypeEnum.NIGHT);
+    nightShiftBaseDto.setWorkDay(LocalDate.parse("2024-01-02"));
+    shiftService.create(morningShiftBaseDto);
+    shiftService.create(nightShiftBaseDto);
+
+    // When
+    String responseString =
+        this.mockMvc
+            .perform(
+                get(SHIFTS_PATH).queryParam("worker_id", worker.getId().toString()))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON))
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+
+    ShiftListDto responseDto = objectMapper.readValue(responseString, ShiftListDto.class);
+
+    // Then
+    List<ShiftDto> dtoElements = responseDto.getElements();
+    assertEquals(2, dtoElements.size());
+    assertEquals(morningShiftBaseDto.getType(), dtoElements.get(0).getType());
+    assertEquals(nightShiftBaseDto.getType(), dtoElements.get(1).getType());
+  }
+
+  @Test
+  void findByWorkerId_shouldReturnHttp400_whenMissingWorkerId() throws Exception {
+    // When
+    String errorMsg =
+        this.mockMvc
+            .perform(get(SHIFTS_PATH))
+            .andDo(print())
+            .andExpect(status().isBadRequest())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+
+    // Then
+    assertTrue(errorMsg.contains("Required parameter 'worker_id' is not present"));
   }
 
   @Test
